@@ -7,7 +7,7 @@ import tensorflow
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import tensorflow.keras.models
-from tensorflow.keras.models import model_from_json
+from tensorflow.keras.models import load_model
 import streamlit
 import re
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -17,13 +17,8 @@ with open('tokenizer.pickle', 'rb') as tk:
     tokenizer = pickle.load(tk)
 
 # Load pre-trained model into memory
-json_file = open('model.json','r')
-loaded_model_json = json_file.read()
-json_file.close()
-lstm_model = model_from_json(loaded_model_json)
+lstm_model = load_model('model.h5')
 
-# Load weights into new model
-lstm_model.load_weights("model.h5")
 
 def sentiment_prediction(review):
     sentiment=[]
